@@ -1,0 +1,11 @@
+.drag-drop-list {
+    width: 100%;
+
+    &__item {
+        user-select: none;
+
+        &--dragging {
+            background-color: rgba(10, 65, 120, 0.9);
+        }
+    }
+}

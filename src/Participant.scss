@@ -1,0 +1,47 @@
+.participant {
+  display: flex;
+  align-items: center;
+  color: #ffffff;
+  background-color: rgba(7, 45, 82, 0.9);
+  padding: 10px;
+  border-bottom: 2px solid rgba(10, 65, 120, 0.9);
+
+  &--is-dragging {
+    background-color: rgba(10, 65, 120, 0.9);
+  }
+
+  &__position {
+    font-size: 30px;
+    margin-right: 10px;
+  }
+
+  &__starting-position {
+    opacity: .5;
+    margin-right: 10px;
+  }
+
+  &__flag {
+    margin-right: 10px;
+  }
+
+  &__song-and-artist {
+    min-width: 0;
+  }
+
+  &__song,
+  &__artist {
+    display: block;
+  }
+
+  &__song {
+    font-weight: bold;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-bottom: 5px;
+    overflow: hidden;
+  }
+
+  &__artist {
+    font-size: 12px;
+  }
+}

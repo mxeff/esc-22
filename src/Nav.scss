@@ -1,0 +1,36 @@
+.nav {
+  display: flex;
+  justify-content: center;
+  background-color: rgba(10, 65, 120, 0.9);
+  width: 100%;
+  border-bottom: 4px solid #db2a82;
+  margin-bottom: 10px;
+  position: sticky;
+  top: 0;
+
+  &__item {
+    flex: 1;
+  }
+
+  &__link {
+    display: block;
+    text-align: center;
+    padding: 16px;
+
+    &,
+    &:active,
+    &:focus,
+    &:hover {
+      color: white;
+      font-weight: normal;
+      text-decoration: none;
+    }
+
+    &--active,
+    &:active,
+    &:focus,
+    &:hover {
+        background-color: rgba(7, 45, 82, 0.9);
+    }
+  }
+}
