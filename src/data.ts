@@ -145,7 +145,7 @@ export const participants: Array<TParticipant> = [
         country: 'Schweden',
         flag: '🇸🇪',
         id: 20,
-        song: 'Hold Me Closeer',
+        song: 'Hold Me Closer',
     },
     {
         artist: 'Sheldon Riley',
