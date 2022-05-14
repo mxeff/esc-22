@@ -1,29 +1,53 @@
 import "./App.scss";
 import { getById } from "./data";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import DragDropList from "./DragDropList";
 import Participant from "./Participant";
-import { Route, Routes } from "react-router-dom";
+import {
+  Route,
+  Routes,
+} from "react-router-dom";
 import Nav from "./Nav";
+import Divergence from "./Divergence";
 
 export interface IRoute {
   label: string;
   hash: string;
-  state: [IState, React.Dispatch<IState>];
+  state?: [Array<number>, React.Dispatch<Array<number>>];
 }
 
-export type IState = Array<number>;
+export interface IState {
+  actual: Array<number>;
+  prediction: Array<number>;
+  taste: Array<number>;
+}
 
-const initialState: IState = Array.from(Array(25)).map(
+const initialValue = Array.from(Array(25)).map(
   (value, index) => index + 1
 );
 
+const initialState = {
+  actual: initialValue,
+  prediction: initialValue,
+  taste: initialValue,
+}
+
 function App() {
-  const [state, setState] = useState({
-    actual: initialState,
-    prediction: initialState,
-    taste: initialState,
-  });
+  const [state, setState] = useState(initialState);
+
+  useEffect(() => {
+    const stateInLocalStorage = localStorage.getItem("state");
+
+    if (!stateInLocalStorage) {
+      return;
+    }
+
+    setState(JSON.parse(stateInLocalStorage));
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("state", JSON.stringify(state));
+  }, [state]);
 
   const routes: Array<IRoute> = [
     {
@@ -35,24 +59,32 @@ function App() {
       ],
     },
     {
-      hash: "actual",
+      hash: "taste",
       label: "Taste",
+      state: [
+        state.taste,
+        (taste) => setState((state) => ({ ...state, taste })),
+      ],
+    },
+    {
+      hash: "ergebnis",
+      label: "Ergebnis",
       state: [
         state.actual,
         (actual) => setState((state) => ({ ...state, actual: actual })),
       ],
     },
     {
-      hash: "taste",
-      label: "Ergebnis",
-      state: [
-        state.taste,
-        (taste) => setState((state) => ({ ...state, taste })),
-      ],
+      hash: "abweichung",
+      label: "Abweichung",
     },
   ];
 
-  const getRouteElement = ([state, handleDragEnd]: IRoute["state"]) => (
+  const routesWithState = routes.filter((route) => "state" in route);
+
+  const getRouteElement = ([state, handleDragEnd]: NonNullable<
+    IRoute["state"]
+  >) => (
     <DragDropList state={state} onDragEnd={handleDragEnd}>
       {(id, index, isDragging) => {
         const props = getById(id);
@@ -61,9 +93,7 @@ function App() {
           return null;
         }
 
-        return (
-          <Participant {...props} index={index} isDragging={isDragging} />
-        );
+        return <Participant {...props} index={index} isDragging={isDragging} />;
       }}
     </DragDropList>
   );
@@ -72,9 +102,16 @@ function App() {
     <>
       <Nav routes={routes} />
       <Routes>
-        {routes.map(({ hash, state }) => (
-          <Route path={hash} key={hash} element={getRouteElement(state)} />
-        ))}
+        {routesWithState.map(({ hash, state }) => {
+          if (!state) {
+            return null;
+          }
+
+          return (
+            <Route path={hash} key={hash} element={getRouteElement(state)} />
+          );
+        })}
+        <Route path={"abweichung"} element={<Divergence {...state} />} />
       </Routes>
     </>
   );

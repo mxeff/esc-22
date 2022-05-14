@@ -5,12 +5,11 @@ import {
   Droppable,
   DropResult,
 } from "react-beautiful-dnd";
-import { IState } from "./App";
 
 interface Props {
   children: (id: number, index: number, isDragging: boolean) => React.ReactNode;
-  state: IState;
-  onDragEnd: (result: IState) => void;
+  state: Array<number>;
+  onDragEnd: (result: Array<number>) => void;
 }
 
 const DragDropList = ({
@@ -18,7 +17,7 @@ const DragDropList = ({
   state,
   onDragEnd,
 }: Props) => {
-  const reorder = (list: IState, startIndex: number, endIndex: number) => {
+  const reorder = (list: Array<number>, startIndex: number, endIndex: number) => {
     const result = Array.from(list);
     const [removed] = result.splice(startIndex, 1);
     result.splice(endIndex, 0, removed);

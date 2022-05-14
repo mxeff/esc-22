@@ -1,0 +1,32 @@
+.divergence {
+    color: #ffffff;
+    padding: 10px;
+
+    h1 {
+        font-size: 24px;
+        margin-bottom: 30px;
+    }
+
+    h2 {
+        font-size: 18px;
+        margin-bottom: 20px;
+    }
+
+    table {
+        width: 100%;
+        margin-bottom: 30px;
+    }
+
+    td {
+        padding: 10px;
+        border: 1px solid #db2a82;
+
+        &:first-child {
+            width: 75%;
+        }
+
+        :last-child {
+            width: 25%;
+        }
+    }
+}

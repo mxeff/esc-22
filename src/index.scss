@@ -5,7 +5,12 @@ body {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
+strong {
+  font-weight: bold;
+}
+
 .emoji {
+  display: block;
   width: 24px;
   height: auto;
 }

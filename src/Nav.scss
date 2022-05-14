@@ -26,10 +26,7 @@
       text-decoration: none;
     }
 
-    &--active,
-    &:active,
-    &:focus,
-    &:hover {
+    &--active {
         background-color: rgba(7, 45, 82, 0.9);
     }
   }
